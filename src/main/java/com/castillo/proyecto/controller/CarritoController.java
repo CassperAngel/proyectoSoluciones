@@ -2,7 +2,6 @@ package com.castillo.proyecto.controller;
 
 import com.castillo.proyecto.model.Producto;
 import com.castillo.proyecto.service.ProductoService;
-
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,8 +30,14 @@ public class CarritoController {
             carrito = new ArrayList<>();
         }
 
+        // ---- CALCULAR TOTAL ----
+        double total = carrito.stream()
+                .mapToDouble(p -> Double.parseDouble(p.getPrecio()))
+                .sum();
+
         model.addAttribute("carrito", carrito);
         model.addAttribute("contador", carrito.size());
+        model.addAttribute("total", total);
 
         return "carrito"; // carrito.html
     }

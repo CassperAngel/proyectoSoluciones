@@ -33,22 +33,37 @@
                 <tr>
                     <th>Producto</th>
                     <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
                     <th>Imagen</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                <tr th:each="prod : ${carrito}">
-                    <td th:text="${prod.nombre}"></td>
-                    <td>S/ <span th:text="${prod.precio}"></span></td>
-                    <td><img th:src="${prod.imagen}" width="70" height="70" class="rounded"></td>
+                <tr th:each="item : ${carrito}">
+                    <td th:text="${item.producto.nombre}"></td>
+
+                    <td>S/
+                        <span th:text="${item.producto.precio}"></span>
+                    </td>
+
+                    <td th:text="${item.cantidad}"></td>
+
+                    <td>S/
+                        <span th:text="${item.subtotal}"></span>
+                    </td>
+
+                    <td>
+                        <img th:src="${item.producto.imagen}"
+                            width="70" height="70" class="rounded">
+                    </td>
                 </tr>
                 </tbody>
             </table>
 
             <h4 class="text-end mt-3">
-                <strong>Total a pagar: </strong> S/
-                <span class="text-success fw-bold" th:text="${total}"></span>
+                <strong>Total a pagar: </strong>
+                S/ <span class="text-success fw-bold" th:text="${total}"></span>
             </h4>
         </div>
     </div>
@@ -73,20 +88,20 @@
                     <h5>Pago con Tarjeta</h5>
 
                     <input type="text" maxlength="16" minlength="16"
-                           class="form-control mb-2"
-                           placeholder="Número de tarjeta (16 dígitos)"
-                           id="tarjetaNumero">
+                            class="form-control mb-2"
+                            placeholder="Número de tarjeta (16 dígitos)"
+                            id="tarjetaNumero">
 
                     <div class="row">
                         <div class="col">
                             <input type="text" maxlength="5" minlength="5"
-                                   class="form-control mb-2"
-                                   placeholder="MM/AA" id="tarjetaFecha">
+                                    class="form-control mb-2"
+                                    placeholder="MM/AA" id="tarjetaFecha">
                         </div>
                         <div class="col">
                             <input type="text" maxlength="3" minlength="3"
-                                   class="form-control mb-2"
-                                   placeholder="CVV" id="tarjetaCVV">
+                                    class="form-control mb-2"
+                                    placeholder="CVV" id="tarjetaCVV">
                         </div>
                     </div>
                 </div>
@@ -96,9 +111,9 @@
                     <h5>Pago con Yape</h5>
 
                     <input type="text" maxlength="9" minlength="9"
-                           class="form-control mb-2"
-                           placeholder="Número de celular (9 dígitos)"
-                           id="yapeNumero">
+                            class="form-control mb-2"
+                            placeholder="Número de celular (9 dígitos)"
+                            id="yapeNumero">
                 </div>
 
                 <button type="submit" class="btn btn-success btn-lg w-100">
@@ -129,6 +144,5 @@
         }
     });
 </script>
-
 </body>
 </html>

@@ -1,6 +1,6 @@
 package com.castillo.proyecto.controller;
 
-import com.castillo.proyecto.model.Producto;
+import com.castillo.proyecto.model.CarritoItem;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,21 +15,15 @@ public class PagoController {
     @GetMapping("/pago")
     public String mostrarPago(Model model, HttpSession session) {
 
-        List<Producto> carrito = (List<Producto>) session.getAttribute("carrito");
+        List<CarritoItem> carrito = (List<CarritoItem>) session.getAttribute("carrito");
         model.addAttribute("carrito", carrito);
 
         double total = 0;
 
         if (carrito != null && !carrito.isEmpty()) {
-
             total = carrito.stream()
-                    .mapToDouble(p -> {
-                        try {
-                            return Double.parseDouble(p.getPrecio()); // <- AQUÍ SE ARREGLA
-                        } catch (Exception e) {
-                            return 0;
-                        }
-                    }).sum();
+                    .mapToDouble(CarritoItem::getSubtotal)
+                    .sum();
         }
 
         model.addAttribute("total", total);

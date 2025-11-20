@@ -50,29 +50,45 @@
             <tr>
                 <th>Producto</th>
                 <th class="text-center">Precio</th>
+                <th class="text-center">Cantidad</th>
                 <th class="text-center">Imagen</th>
                 <th class="text-center">Acción</th>
             </tr>
         </thead>
 
         <tbody>
-        <tr th:each="prod, i : ${carrito}">
-            <td th:text="${prod.nombre}" class="fw-semibold"></td>
+    <tr th:each="item : ${carrito}">
+        
+        <td th:text="${item.producto.nombre}" class="fw-semibold"></td>
 
-            <td class="text-center">
-                S/ <span th:text="${prod.precio}"></span>
-            </td>
+        <td class="text-center">
+            S/ <span th:text="${item.producto.precio}"></span>
+        </td>
 
-            <td class="text-center">
-                <img th:src="${prod.imagen}" width="70" height="70" class="rounded shadow-sm"/>
-            </td>
+        <td class="text-center">
+            <div class="d-flex justify-content-center align-items-center">
 
-            <td class="text-center">
-                <a th:href="@{/carrito/eliminar/{index}(index=${i.index})}"
-                class="btn btn-danger btn-sm">Eliminar</a>
-            </td>
-        </tr>
-        </tbody>
+                <a th:href="@{/carrito/menos/{id}(id=${item.producto.id})}" 
+                class="btn btn-outline-secondary btn-sm">-</a>
+
+                <span class="mx-3 fw-bold" th:text="${item.cantidad}"></span>
+
+                <a th:href="@{/carrito/mas/{id}(id=${item.producto.id})}" 
+                class="btn btn-outline-secondary btn-sm">+</a>
+            </div>
+        </td>
+
+        <td class="text-center">
+            <img th:src="${item.producto.imagen}" width="70" height="70" class="rounded shadow-sm"/>
+        </td>
+
+        <td class="text-center">
+            <a th:href="@{/carrito/eliminar/{id}(id=${item.producto.id})}"
+            class="btn btn-danger btn-sm">Eliminar</a>
+        </td>
+    </tr>
+</tbody>
+
     </table>
 
     <!-- TOTAL -->
